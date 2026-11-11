@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
-import { BottomNav } from './components/ui'
+import { BottomNav, SiteHeader } from './components/ui'
 import { StoreProvider, useStore } from './data/store'
 import { Login, Onboarding, Otp } from './client/Auth'
 import { Home } from './client/Home'
@@ -10,8 +10,25 @@ import { Addresses, Emergency, Orders, Profile } from './client/Pages'
 import { Cashbox, Delivery, Missions } from './livreur/Livreur'
 import { ConsoleLayout, Dispatch, Reports, Settings, Stock } from './console/Console'
 
-function MobileShell() {
-  return <div className="phone"><Outlet /></div>
+/** Pages publiques (accueil marketing, connexion) : pleine largeur, sans en-tête connecté. */
+function PublicShell() {
+  return <div className="site"><Outlet /></div>
+}
+
+/** Site client connecté : en-tête sur grand écran, barre du bas sur mobile. */
+function ClientShell() {
+  const { cart } = useStore()
+  return (
+    <div className="site">
+      <SiteHeader cartCount={cart.reduce((s, l) => s + l.qty, 0)} />
+      <Outlet />
+    </div>
+  )
+}
+
+/** Appli livreur : pensée pour le téléphone, centrée sur grand écran. */
+function DriverShell() {
+  return <div className="driver-shell"><Outlet /></div>
 }
 
 function ClientTabs() {
@@ -48,10 +65,12 @@ export default function App() {
     <StoreProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<MobileShell />}>
+          <Route element={<PublicShell />}>
             <Route path="/" element={<Onboarding />} />
             <Route path="/connexion" element={<Login />} />
             <Route path="/otp" element={<Otp />} />
+          </Route>
+          <Route element={<ClientShell />}>
             <Route path="/produit/:id" element={<Product />} />
             <Route path="/suivi/:id" element={<Tracking />} />
             <Route path="/urgence" element={<Emergency />} />
@@ -62,6 +81,8 @@ export default function App() {
               <Route path="/adresses" element={<Addresses />} />
               <Route path="/profil" element={<Profile />} />
             </Route>
+          </Route>
+          <Route element={<DriverShell />}>
             <Route path="/livreur/livraison/:id" element={<Delivery />} />
             <Route element={<DriverTabs />}>
               <Route path="/livreur" element={<Missions />} />

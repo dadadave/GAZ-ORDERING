@@ -27,7 +27,8 @@ export function Cart() {
   return (
     <div className="screen">
       <TopBar title="Panier" />
-      <div className="pad stack">
+      <div className="pad split cart-split">
+      <div className="stack">
         {cart.map((l, i) => {
           const p = product(l.productId)
           return (
@@ -71,13 +72,15 @@ export function Cart() {
             <b className="grow">{PAYMENT_LABEL[m]}</b>
           </label>
         ))}
+      </div>
 
+      <aside className="summary stack">
         <div className="card totals">
+          <h3 className="hide-sm">Récapitulatif</h3>
           <div className="row-between"><span>Sous-total</span><span>{fcfa(sub)}</span></div>
           <div className="row-between"><span>Livraison</span><span>{fcfa(DELIVERY_FEE)}</span></div>
           <div className="row-between total"><b>Total</b><b>{fcfa(sub + DELIVERY_FEE)}</b></div>
         </div>
-      </div>
       <div className="sticky-cta">
         <button className="btn btn-primary btn-lg" onClick={() => {
           const o = placeOrder(addresses.find((a) => a.id === addr)!, pay)
@@ -85,6 +88,8 @@ export function Cart() {
         }}>
           {pay === 'cash' ? 'Commander' : 'Payer et commander'} · {fcfa(sub + DELIVERY_FEE)}
         </button>
+      </div>
+      </aside>
       </div>
     </div>
   )

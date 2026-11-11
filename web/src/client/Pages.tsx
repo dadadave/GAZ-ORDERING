@@ -11,7 +11,7 @@ export function Orders() {
   return (
     <div className="screen with-nav">
       <TopBar title="Mes commandes" back={false} />
-      <div className="pad stack">
+      <div className="pad orders-grid">
         {mine.map((o) => {
           const p = product(o.lines[0].productId)
           return (
@@ -46,7 +46,7 @@ export function Addresses() {
   const [adding, setAdding] = useState(false)
   const [f, setF] = useState({ label: '', quarter: '', landmark: '', phone: '' })
   return (
-    <div className="screen with-nav">
+    <div className="screen with-nav narrow">
       <TopBar title="Mes adresses" />
       <div className="pad stack">
         {addresses.map((a) => (
@@ -79,7 +79,7 @@ export function Addresses() {
 
 export function Emergency() {
   return (
-    <div className="screen emergency">
+    <div className="screen emergency narrow">
       <TopBar title="Fuite de gaz" />
       <div className="pad stack">
         <div className="sos-hero"><Icon name="alert" size={44} /><h2>Gardez votre calme</h2><p>Suivez ces étapes immédiatement.</p></div>
@@ -102,7 +102,7 @@ export function Emergency() {
 export function Profile() {
   const [lang, setLang] = useState<'fr' | 'en'>('fr')
   return (
-    <div className="screen with-nav">
+    <div className="screen with-nav narrow">
       <TopBar title="Profil" back={false} />
       <div className="pad stack">
         <div className="card profile">

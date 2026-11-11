@@ -17,7 +17,8 @@ export function Tracking() {
   return (
     <div className="screen">
       <TopBar title={`Commande ${o.id}`} />
-      <MapView progress={PROGRESS[o.status] ?? 0} height={260} />
+      <div className="split track-split">
+      <div className="track-map"><MapView progress={PROGRESS[o.status] ?? 0} height={260} /></div>
       <div className="pad stack sheet overlap">
         <div className="eta card">
           <div>
@@ -61,6 +62,7 @@ export function Tracking() {
             if (motif) setStatus(o.id, 'annulee')
           }}>Annuler la commande</button>
         )}
+      </div>
       </div>
     </div>
   )

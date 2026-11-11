@@ -71,7 +71,32 @@ export function TopBar({ title, right, back = true }: { title: string; right?: R
   )
 }
 
-export type NavItem = { to: string; icon: string; label: string; center?: boolean; badge?: number }
+/** En-tête du site (écrans larges). Sur mobile, c'est la barre du bas qui prend le relais. */
+export function SiteHeader({ cartCount }: { cartCount: number }) {
+  const link = ({ isActive }: { isActive: boolean }) => 'site-link' + (isActive ? ' active' : '')
+  return (
+    <header className="site-header">
+      <div className="site-header-inner">
+        <NavLink to="/accueil" className="brand"><span className="brand-mark"><Icon name="flame" size={20} /></span>GazExpress</NavLink>
+        <nav className="site-nav">
+          <NavLink to="/accueil" className={link}>Bouteilles</NavLink>
+          <NavLink to="/commandes" className={link}>Mes commandes</NavLink>
+          <NavLink to="/adresses" className={link}>Adresses</NavLink>
+        </nav>
+        <div className="site-actions">
+          <NavLink to="/urgence" className="btn btn-sm btn-danger"><Icon name="alert" size={16} /> Fuite de gaz</NavLink>
+          <NavLink to="/panier" className="icon-btn cart-btn" aria-label="Panier">
+            <Icon name="cart" />
+            {cartCount > 0 && <span className="badge">{cartCount}</span>}
+          </NavLink>
+          <NavLink to="/profil" className="avatar sm" aria-label="Profil">MN</NavLink>
+        </div>
+      </div>
+    </header>
+  )
+}
+
+export type NavItem ={ to: string; icon: string; label: string; center?: boolean; badge?: number }
 
 export function BottomNav({ items }: { items: NavItem[] }) {
   return (

@@ -17,6 +17,7 @@ export function Product() {
   return (
     <div className="screen">
       <TopBar title="Détails" />
+      <div className="split">
       <div className="product-hero" style={{ background: p.color + '18' }}>
         <Bottle color={p.color} size={p.size} height={190} />
       </div>
@@ -58,7 +59,6 @@ export function Product() {
             <button onClick={() => setQty(qty + 1)} aria-label="Plus"><Icon name="plus" size={18} /></button>
           </div>
         </div>
-      </div>
       <div className="sticky-cta">
         <button className="btn btn-primary btn-lg" disabled={!p.stock} onClick={() => {
           addToCart({ productId: p.id, qty, kind, emptyBrand: kind === 'recharge' ? empty : undefined })
@@ -66,6 +66,8 @@ export function Product() {
         }}>
           Ajouter au panier · {fcfa(unit * qty)}
         </button>
+      </div>
+      </div>
       </div>
     </div>
   )
